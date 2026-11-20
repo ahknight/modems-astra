@@ -33,3 +33,4 @@ signal-player details li { margin:.45rem 0; }
   .sp-seek { flex-basis:35%; }
   .sp-clock { font-size:.72rem; }
 }
+.sp-method { margin:.5rem 0 0; font-size:.95rem; }

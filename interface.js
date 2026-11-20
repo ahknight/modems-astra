@@ -1,16 +1,8 @@
 // The analyzer and its player share the same mono PCM buffer.
 (() => {
-  const chapters = [
-    [300, 'Bell 103'], [1200, 'V.22'], [2400, 'V.22bis'], [9600, 'V.32'],
-    [14400, 'V.32bis'], [28800, 'V.34'], [33600, 'V.34'], [56000, 'V.90']
-  ];
-  document.querySelector('#rail').innerHTML = chapters.map(([rate, name], i) =>
-    '<a href="#ch-' + rate + '"><small>CH ' + String(i + 1).padStart(2, '0') +
-    '</small><b>' + (rate < 1000 ? rate : rate / 1000 + 'K') + '</b><span>' + name + '</span></a>'
-  ).join('');
   const duration = 12, sampleRate = 12000, tau = 2 * Math.PI;
   const pcm = new Float32Array(sampleRate * duration);
-  const probe = Array.from({length:25}, (_, i) => 150 * (i + 1)).filter(f => ![900,1200,1800,2400].includes(f));
+  const probe = [1,-2,3,4,5,7,9,10,-11,13,14,-15,17,-18,19,-20,-21,-22,-23,24,25].map(n => n * 150);
   const pairs = [[697,1209],[770,1336],[852,1477]];
   for (let i = 0; i < pcm.length; i++) {
     const t = i / sampleRate;
@@ -18,8 +10,8 @@
     const tones = t < 4 ? pairs[Math.min(2, Math.floor(t * 3/4))] : t < 8 ? [2100] : probe;
     const end = t < 4 ? 1.19 : 4;
     const envelope = Math.min(1, local * 100, Math.max(0, (end - local) * 100));
-    pcm[i] = envelope * .14 * tones.reduce((sum,f,k) =>
-      sum + Math.cos(tau*f*t + k*k/tones.length), 0) / Math.sqrt(tones.length);
+    pcm[i] = envelope * .14 * tones.reduce((sum,f) =>
+      sum + Math.sign(f) * Math.cos(tau*Math.abs(f)*t), 0) / Math.sqrt(tones.length);
   }
   const canvas = document.querySelector('#waterfall'), pen = canvas.getContext('2d');
   const lines = [], bins = 172, frame = 512, count = 67;
@@ -61,7 +53,8 @@
   function display(t) {
     seek.value=t;timer.textContent='00:'+String(Math.floor(t)).padStart(2,'0')+' / 00:12';
     label.textContent=t || src ? phase(t) : 'FREQUENCY WATERFALL';
-    draw(t,Boolean(t || src));
+    const still = src && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    draw(still ? Math.min(8, Math.floor(t / 4) * 4) : t, Boolean(t || src));
   }
   function pause(){
     epoch++;cancelAnimationFrame(raf);
