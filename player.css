@@ -1,0 +1,35 @@
+signal-player { display:block; margin:2rem 0 0; color:#1c3227; }
+signal-player .sp-console { border:1px solid #aab8a2; border-radius:8px; background:#edf0e4; overflow:hidden; padding:0; }
+signal-player .sp-heading { padding:1.25rem 1.4rem .9rem; margin:0; }
+.sp-label,.sp-meta,.sp-clock,.sp-legend { font:600 .78rem/1.5 var(--mono,monospace); }
+.sp-label,.sp-meta { letter-spacing:.075em; text-transform:uppercase; }
+signal-player .sp-heading h3 { margin:.3rem 0 0; font:normal clamp(1.4rem,2vw,1.9rem)/1.2 var(--serif,Georgia); }
+.sp-instrument { margin:0 1.4rem; padding:.7rem .85rem; background:#142a20; border-radius:4px; color:#dcead4; }
+.sp-meta,.sp-legend,.sp-transport,.sp-steps { display:flex; gap:.8rem; align-items:center; }
+.sp-meta { justify-content:space-between; margin-bottom:.45rem; font-size:.72rem; }
+signal-player canvas { display:block; width:100%; height:100px; background:#172d23; }
+.sp-legend { margin-top:.4rem; font-weight:400; flex-wrap:wrap; }
+.sp-legend label { display:flex; align-items:center; gap:.3rem; cursor:pointer; padding:.2rem 0; }
+.sp-legend input { accent-color:#c9eb7c; }
+.sp-transport { margin:1rem 1.4rem; flex-wrap:wrap; }
+signal-player button { color:inherit; font:600 .9rem/1.3 system-ui,sans-serif; min-height:38px; padding:.45rem .85rem; background:transparent; border:1px solid #a2b298; border-radius:4px; }
+signal-player .sp-play { background:#233c2c; border-color:#233c2c; color:#eff9da; }
+signal-player button:hover { box-shadow:inset 0 0 0 1px currentColor; }
+.sp-seek { display:flex; align-items:center; flex:1 1 100px; }
+.sp-seek input { width:100%; accent-color:#345738; }
+.sp-clock { font-variant-numeric:tabular-nums; }
+.sp-steps { flex-wrap:wrap; margin:1rem 1.4rem .4rem; gap:.35rem; }
+signal-player .sp-steps button { border-radius:99px; min-height:32px; font-size:.82rem; }
+signal-player button[aria-pressed=true] { background:#d5ebac; border-color:#70875e; }
+signal-player .sp-status { padding:0 1.4rem; margin:.55rem 0 1rem; min-height:3em; max-width:75ch; }
+signal-player details { border-top:1px solid #b8c3ad; padding:0 1.4rem; background:#f5f6eb; }
+signal-player summary { padding:.7rem 0; cursor:pointer; font-size:.9rem; font-weight:600; }
+signal-player details li { margin:.45rem 0; }
+.sp-hidden { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+@media(max-width:540px) {
+  .sp-instrument,.sp-transport,.sp-steps { margin-inline:.8rem; }
+  signal-player .sp-heading,signal-player .sp-status,signal-player details { padding-inline:.8rem; }
+  .sp-transport { gap:.5rem; }
+  .sp-seek { flex-basis:35%; }
+  .sp-clock { font-size:.72rem; }
+}
